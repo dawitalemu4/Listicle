@@ -6,7 +6,7 @@ const port = 4000;
 app.use(express.static('public'));
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'landing.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })
 
 app.get('/character/:id', function(req, res) {
