@@ -1,27 +1,27 @@
 const express = require('express');
-const path = require('path');
-const app = express();
+const pgp = require('pg-promise')();
+const server = express();
+require('dotenv').config();
 const port = 4001;
+const db = pgp(process.env.DB)
 
-app.use(express.static('../client'));
+server.get('/', function(req, res) {
+  db.one('SELECT * FROM character')
+  .then(data => {res.json(data)})
+  .catch(error => {console.log(error)});
+});
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client', 'index.html'));
-})
-
-app.get('/character/:id', function(req, res) {
+server.get('/character/:id', function(req, res) {
   const id = parseInt(req.params.id);
   if (id > 0 && id < 6) {
-    res.sendFile(path.join(__dirname, '../', 'client', 'character.html'));
+  db.one(`SELECT ${id} FROM character`)
+  .then(data => {res.json(data)})
+  .catch(error => {console.log(error)});
   } else {
-    res.status(404).sendFile(path.join(__dirname, '../', 'client', '404.html'));
+    console.error('Character not found');
   }
 });
 
-app.get('*', function(req, res) {
-  res.status(404).sendFile(path.join(__dirname, '../', 'client', '404.html'));
-});
-
-app.listen(port, function() {
-  console.log(`App listening on port ${port}`);
+server.listen(port, function() {
+  console.log(`Server listening on port ${port}`);
 });
