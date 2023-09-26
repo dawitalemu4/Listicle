@@ -1,0 +1,10 @@
+{
+  "name": "client",
+  "scripts": {
+    "start": "node routes.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "path": "^0.12.7"
+  }
+}
