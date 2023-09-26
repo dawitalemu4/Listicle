@@ -3,9 +3,22 @@ const pgp = require('pg-promise')();
 const server = express();
 require('dotenv').config();
 const port = 4001;
-const db = pgp(process.env.DB)
+
+const connection = {  
+  host: process.env.HOST,
+  port: process.env.PORT,
+  database: process.env.DB,
+  user: process.env.USER,
+  password: process.env.PASSWORD
+};
+console.log(connection);
+const db = pgp(connection)
 
 server.get('/', function(req, res) {
+  res.json("Dawit's listicle server");
+});
+
+server.get('/characters', function(req, res) {
   db.one('SELECT * FROM character')
   .then(data => {res.json(data)})
   .catch(error => {console.log(error)});
