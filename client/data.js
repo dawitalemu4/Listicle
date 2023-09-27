@@ -1,4 +1,4 @@
-const API_URL = 'https://listicleserver.onrender.com';
+const API_URL = 'http:localhost:4001';
 
 async function getID(id) {
     const response = await fetch(new URL(`/character/${id}`, API_URL).toString())
