@@ -1,19 +1,17 @@
-const API_URL = 'https://listicle.onrender.com';
+const API_URL = 'https://listicleserver.onrender.com';
 
 async function getID(id) {
     const response = await fetch(new URL(`/character/${id}`, API_URL).toString())
     const data = await response.json()
 
-    const selectedItem = data.find(item => item.id === parseInt(id));
-
-    if (selectedItem) {
+    if (data) {
         const ItemContainer = document.getElementById('ItemContainer');
         const ItemTitle = document.getElementById('ItemTitle');
-        ItemTitle.textContent = selectedItem.title;
+        ItemTitle.textContent = data.title;
         const ItemDesc = document.getElementById('ItemDesc');
-        ItemDesc.textContent = selectedItem.text;
+        ItemDesc.textContent = data.description;
         const ItemImg = document.getElementById('ItemImg');
-        ItemImg.src = selectedItem.image;
+        ItemImg.src = data.img;
         
         ItemContainer.appendChild(ItemTitle);
         ItemContainer.appendChild(ItemDesc);
@@ -34,10 +32,10 @@ async function getAll() {
         const ItemTitle = document.createElement('header');
         ItemTitle.textContent = item.title;
         const ItemImg = document.createElement('img');
-        ItemImg.src = item.image;
+        ItemImg.src = item.img;
         const ItemFooter = document.createElement('footer');
         const ItemLink = document.createElement('a');
-        ItemLink.href = item.page
+        ItemLink.href = '/character/' + item.id;
         ItemLink.textContent = "More on " + item.title
         
         Item.appendChild(ItemTitle);
