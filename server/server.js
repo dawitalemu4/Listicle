@@ -17,7 +17,7 @@ const db = pgp(connection);
 
 const corsOptions = {
   origin: (origin, callback) => {
-    const allowedOrigins = 'https://listicle.onrender.com';
+    const allowedOrigins = 'http://localhost:3000';
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -34,8 +34,7 @@ server.get('/', function(req, res) {
 
 server.get('/characters', function(req, res) {
   db.manyOrNone('SELECT * FROM character')
-  .then(data => {res.json(data)
-  console.log(data)})
+  .then(data => {res.json(data)})
   .catch(error => {console.log(error)});
 });
 
